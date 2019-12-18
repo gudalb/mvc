@@ -1,4 +1,4 @@
-package se.nackademin;
+package se.nackademin.View;
 
 import javax.swing.*;
 import java.awt.*;

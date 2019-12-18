@@ -1,10 +1,7 @@
-package se.nackademin;
+package se.nackademin.Controller;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.sql.SQLOutput;
+import se.nackademin.Model.Model;
+import se.nackademin.View.View;
 
 public class Controller implements Runnable {
     Model model;

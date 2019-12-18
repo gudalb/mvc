@@ -1,4 +1,4 @@
-package se.nackademin;
+package se.nackademin.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Model {
         return playerScore;
     }
 
-    int playerScore = 0;
+    public int playerScore = 0;
     List<Integer> playerMoveHistory = new ArrayList<>();
     String player = "O";
     String filler = "  ";
@@ -40,7 +40,7 @@ public class Model {
 
     }
 
-    String getPlayArea() {
+    public String getPlayArea() {
         StringBuilder playFieldString = new StringBuilder();
 
         for (int i = 0; i < playArea.length; i++) {
@@ -53,11 +53,11 @@ public class Model {
         return playFieldString.toString();
     }
 
-    boolean getCollision() {
+    public boolean getCollision() {
         return collision;
     }
 
-    void moveUp() {
+    public void moveUp() {
 
         playerMoveHistory.add(playerLoc);
 
@@ -66,14 +66,10 @@ public class Model {
         else
             playerLoc = playerLoc - gameSize;
 
-        collisionCheck();
-        playArea[playerLoc] = player;
-
-        checkIfPoint();
-        paintGame();
+        makeMove();
     }
 
-    void moveDown() {
+    public void moveDown() {
 
         playerMoveHistory.add(playerLoc);
 
@@ -82,14 +78,10 @@ public class Model {
         else
             playerLoc = playerLoc + gameSize;
 
-        collisionCheck();
-        playArea[playerLoc] = player;
-
-        checkIfPoint();
-        paintGame();
+        makeMove();
     }
 
-    void moveLeft() {
+    public void moveLeft() {
 
         playerMoveHistory.add(playerLoc);
 
@@ -98,23 +90,22 @@ public class Model {
         else
             playerLoc = playerLoc - 1;
 
-        collisionCheck();
-        playArea[playerLoc] = player;
-
-        checkIfPoint();
-        paintGame();
+        makeMove();
     }
 
-    void moveRight() {
+    public void moveRight() {
 
         playerMoveHistory.add(playerLoc);
 
         if ((playerLoc) % gameSize == gameSize - 1)
             playerLoc = playerLoc - gameSize + 1;
-
         else
             playerLoc = playerLoc + 1;
 
+        makeMove();
+    }
+
+    void makeMove () {
         collisionCheck();
         playArea[playerLoc] = player;
 
@@ -123,8 +114,15 @@ public class Model {
     }
 
     private void addRandomGoalPoint() {
-        pointLoc = r.nextInt(gameSize * gameSize);
+
+        while(true) {
+            pointLoc = r.nextInt(gameSize * gameSize);
+            if(!playArea[pointLoc].equals(tail) && !playArea[pointLoc].equals(player) )
+                break;
+        }
+
         playArea[pointLoc] = goal;
+
     }
 
     private void checkIfPoint() {
