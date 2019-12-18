@@ -14,8 +14,8 @@ public class Model {
 
     int playerScore = 0;
     List<Integer> playerMoveHistory = new ArrayList<>();
-    String player = "0";
-    String filler = " ";
+    String player = "O";
+    String filler = "  ";
     String tail = "o";
     String goal = "x";
     boolean collision = false;
@@ -47,14 +47,10 @@ public class Model {
             if (i % gameSize == 0) {
                 playFieldString.append("\n");
             }
-            playFieldString.append(playArea[i]);
+            playFieldString.append(playArea[i] + "   ");
         }
 
         return playFieldString.toString();
-    }
-
-    public void setGameSize(int i) {
-        this.gameSize = i;
     }
 
     boolean getCollision() {
@@ -63,11 +59,10 @@ public class Model {
 
     void moveUp() {
 
-        int tempLoc = playerLoc;
         playerMoveHistory.add(playerLoc);
 
         if (playerLoc - gameSize < 0)
-            playerLoc = (gameSize * gameSize) - playerLoc - 1;
+            playerLoc = (gameSize * gameSize) - (gameSize - playerLoc);
         else
             playerLoc = playerLoc - gameSize;
 
@@ -80,7 +75,6 @@ public class Model {
 
     void moveDown() {
 
-        int tempLoc = playerLoc;
         playerMoveHistory.add(playerLoc);
 
         if (playerLoc + gameSize > gameSize * gameSize)
@@ -97,7 +91,6 @@ public class Model {
 
     void moveLeft() {
 
-        int tempLoc = playerLoc;
         playerMoveHistory.add(playerLoc);
 
         if ((playerLoc) % gameSize == 0)
@@ -114,8 +107,6 @@ public class Model {
 
     void moveRight() {
 
-
-        int tempLoc = playerLoc;
         playerMoveHistory.add(playerLoc);
 
         if ((playerLoc) % gameSize == gameSize - 1)
@@ -158,15 +149,9 @@ public class Model {
                 playArea[i] = filler;
             }
 
-
-            if (playerScore > 0) {
-
-
-                for (int e = 1; e < playerScore + 1; e++) {
-                    playArea[playerMoveHistory.get(playerMoveHistory.size() - 1 - e)] = tail;
-                }
+            for (int e = 0; e < playerScore + 1; e++) {
+                playArea[playerMoveHistory.get(playerMoveHistory.size() - 1 - e)] = tail;
             }
-
 
         }
 

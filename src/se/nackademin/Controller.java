@@ -41,7 +41,7 @@ public class Controller implements Runnable {
             }
 
             try {
-                Thread.sleep(350);
+                Thread.sleep(150);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

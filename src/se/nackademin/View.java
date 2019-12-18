@@ -13,6 +13,7 @@ public class View extends JFrame implements KeyListener{
 
     JPanel gamePanel = new JPanel();
     JLabel playerScore = new JLabel();
+    JPanel scorePanel = new JPanel();
 
     JTextArea playingField = new JTextArea(gameSize,gameSize);
 
@@ -23,15 +24,17 @@ public class View extends JFrame implements KeyListener{
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
 
-        this.setSize(500,500);
+        this.setSize(500,400);
         this.add(gamePanel);
+
 
         playerScore.setText("Score: ");
         playingField.setEditable(false);
         gamePanel.add(playingField);
-        gamePanel.add(playerScore);
-
+        scorePanel.add(playerScore);
+        gamePanel.add(scorePanel);
         this.setVisible(true);
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
@@ -56,20 +59,20 @@ public class View extends JFrame implements KeyListener{
 
         switch (keyValue) {
             case KeyEvent.VK_UP:
-                setMoveDirection("up");
-                System.out.println(moveDirection);
+                if(!moveDirection.equals("down"))
+                    setMoveDirection("up");
                 break;
             case KeyEvent.VK_DOWN:
-                setMoveDirection("down");
-                System.out.println(moveDirection);
+                if(!moveDirection.equals("up"))
+                    setMoveDirection("down");
                 break;
             case KeyEvent.VK_LEFT:
-                setMoveDirection("left");
-                System.out.println(moveDirection);
+                if(!moveDirection.equals("right"))
+                    setMoveDirection("left");
                 break;
             case KeyEvent.VK_RIGHT:
-                setMoveDirection("right");
-                System.out.println(moveDirection);
+                if(!moveDirection.equals("left"))
+                    setMoveDirection("right");
                 break;
         }
     }
