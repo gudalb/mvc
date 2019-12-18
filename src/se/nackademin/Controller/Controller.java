@@ -3,22 +3,35 @@ package se.nackademin.Controller;
 import se.nackademin.Model.Model;
 import se.nackademin.View.View;
 
-public class Controller implements Runnable {
-    Model model;
-    View view;
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class Controller extends JFrame implements Runnable, KeyListener {
+    private Model model;
+    private View view;
+    private JPanel invisPanel = new JPanel();
+    private String moveDirection = "up";
 
     public Controller (Model model, View view) {
         this.model = model;
         this.view = view;
         view.setPlayingField(model.getPlayArea());
+
+        // Jframe needed for KeyListener
+        add(invisPanel);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+
     }
 
     @Override
     public void run() {
 
         while (true) {
-
-            String moveDirection = view.getDirection();
 
             if(moveDirection.equals("up"))
                 model.moveUp();
@@ -44,6 +57,37 @@ public class Controller implements Runnable {
             }
 
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyValue = e.getKeyCode();
+
+        switch (keyValue) {
+            case KeyEvent.VK_UP:
+                if(!moveDirection.equals("down"))
+                    moveDirection = "up";
+                break;
+            case KeyEvent.VK_DOWN:
+                if(!moveDirection.equals("up"))
+                    moveDirection = "down";
+                break;
+            case KeyEvent.VK_LEFT:
+                if(!moveDirection.equals("right"))
+                    moveDirection = "left";
+                break;
+            case KeyEvent.VK_RIGHT:
+                if(!moveDirection.equals("left"))
+                    moveDirection = "right";
+                break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 }
 

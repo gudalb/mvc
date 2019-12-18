@@ -6,27 +6,23 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class View extends JFrame implements KeyListener{
+public class View extends JFrame {
 
-    int gameSize;
-    String moveDirection = "up";
+    private int gameSize;
 
-    JPanel gamePanel = new JPanel();
-    JLabel playerScore = new JLabel();
-    JPanel scorePanel = new JPanel();
+    private JPanel gamePanel = new JPanel();
+    private JLabel playerScore = new JLabel();
+    private JPanel scorePanel = new JPanel();
 
     JTextArea playingField = new JTextArea(gameSize,gameSize);
 
     public View (int gameSize) {
         this.gameSize = gameSize;
 
-        addKeyListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
-
         this.setSize(500,400);
         this.add(gamePanel);
 
+        setVisible(true);
 
         playerScore.setText("Score: ");
         playingField.setEditable(false);
@@ -53,46 +49,4 @@ public class View extends JFrame implements KeyListener{
     }
 
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyValue = e.getKeyCode();
-
-        switch (keyValue) {
-            case KeyEvent.VK_UP:
-                if(!moveDirection.equals("down"))
-                    setMoveDirection("up");
-                break;
-            case KeyEvent.VK_DOWN:
-                if(!moveDirection.equals("up"))
-                    setMoveDirection("down");
-                break;
-            case KeyEvent.VK_LEFT:
-                if(!moveDirection.equals("right"))
-                    setMoveDirection("left");
-                break;
-            case KeyEvent.VK_RIGHT:
-                if(!moveDirection.equals("left"))
-                    setMoveDirection("right");
-                break;
-        }
-    }
-
-    public void setMoveDirection (String direction) {
-        moveDirection = direction;
-    }
-
-    public String getDirection () {
-        return moveDirection;
-    }
-
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
 }

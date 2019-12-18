@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Random;
 
 public class Model {
-    int gameSize;
-    int playerLoc;
+    private int gameSize;
+    private int playerLoc;
 
     public int getPlayerScore() {
         return playerScore;
     }
 
     public int playerScore = 0;
-    List<Integer> playerMoveHistory = new ArrayList<>();
-    String player = "O";
-    String filler = "  ";
-    String tail = "o";
-    String goal = "x";
-    boolean collision = false;
-    Random r = new Random();
-    int pointLoc;
+    private List<Integer> playerMoveHistory = new ArrayList<>();
+    private String player = "O";
+    private String filler = "  ";
+    private String tail = "o";
+    private String goal = "x";
+    private boolean collision = false;
+    private Random r = new Random();
+    private int pointLoc;
 
     private String[] playArea;
 
@@ -105,12 +105,13 @@ public class Model {
         makeMove();
     }
 
-    void makeMove () {
+    private void makeMove() {
         collisionCheck();
         playArea[playerLoc] = player;
 
         checkIfPoint();
         paintGame();
+
     }
 
     private void addRandomGoalPoint() {
