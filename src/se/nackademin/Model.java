@@ -70,14 +70,14 @@ public class Model {
         playArea[playerLoc] = player;
 
         checkIfPoint();
-        paintTail();
+        paintGame();
     }
 
     void moveDown() {
 
         playerMoveHistory.add(playerLoc);
 
-        if (playerLoc + gameSize > gameSize * gameSize)
+        if (playerLoc + gameSize + 1  > gameSize * gameSize)
             playerLoc = playerLoc % gameSize;
         else
             playerLoc = playerLoc + gameSize;
@@ -86,7 +86,7 @@ public class Model {
         playArea[playerLoc] = player;
 
         checkIfPoint();
-        paintTail();
+        paintGame();
     }
 
     void moveLeft() {
@@ -102,7 +102,7 @@ public class Model {
         playArea[playerLoc] = player;
 
         checkIfPoint();
-        paintTail();
+        paintGame();
     }
 
     void moveRight() {
@@ -119,7 +119,7 @@ public class Model {
         playArea[playerLoc] = player;
 
         checkIfPoint();
-        paintTail();
+        paintGame();
     }
 
     private void addRandomGoalPoint() {
@@ -138,9 +138,9 @@ public class Model {
         collision = playArea[playerLoc].equals(tail);
     }
 
-    private void paintTail() {
+    private void paintGame() {
 
-        for (int i = 0; i < playArea.length - 1; i++) {
+        for (int i = 0; i < playArea.length; i++) {
             if (i == playerLoc)
                 playArea[i] = player;
             else if (i == pointLoc)
