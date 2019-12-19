@@ -3,7 +3,6 @@ package se.nackademin.Controller;
 import se.nackademin.Model.Model;
 import se.nackademin.View.View;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -13,19 +12,20 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
     private Model model;
     private View view;
     private String moveDirection = "up";
+    private boolean collision = false;
 
     public Controller (Model model, View view) {
         this.model = model;
         this.view = view;
         this.view.setPlayingField(model.getPlayArea());
         this.view.addKeyListener(this);
+        this.model.addObserver(this);
     }
 
     @Override
     public void run() {
 
         while (true) {
-
             if(moveDirection.equals("up"))
                 model.moveUp();
             if(moveDirection.equals("down"))
@@ -38,7 +38,7 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
             view.setPlayingField(model.getPlayArea());
             view.setPlayerScore(model.getPlayerScore());
 
-            if(model.getCollision()) {
+            if(collision) {
                 view.showGameOver("Game Over, Score: " + model.getPlayerScore());
                 break;
             }
@@ -54,7 +54,8 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        System.out.println("property change detected");
+        this.collision = (boolean) evt.getNewValue();
     }
 
     @Override

@@ -1,10 +1,6 @@
 package se.nackademin.View;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class View extends JFrame {
 
@@ -19,14 +15,13 @@ public class View extends JFrame {
         this.gameSize = gameSize;
         this.setSize(500,400);
         this.add(gamePanel);
-        setVisible(true);
+        this.setVisible(true);
         playerScore.setText("Score: ");
         playingField.setEditable(false);
         gamePanel.add(playingField);
         scorePanel.add(playerScore);
         gamePanel.add(scorePanel);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
 

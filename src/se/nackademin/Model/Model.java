@@ -19,7 +19,6 @@ public class Model  {
     private Random r = new Random();
     private int pointLoc;
     private PropertyChangeSupport support;
-
     private String[] playArea;
 
     public Model(int gameSize) {
@@ -115,7 +114,6 @@ public class Model  {
         playArea[playerLoc] = player;
         checkIfPoint();
         paintGame();
-
     }
 
     private void addRandomGoalPoint() {
@@ -136,6 +134,12 @@ public class Model  {
     }
 
     private void collisionCheck() {
+
+        if(playArea[playerLoc].equals(tail)) {
+            support.firePropertyChange("collision", this.collision, true);
+            System.out.println("prop fired");
+        }
+
         collision = playArea[playerLoc].equals(tail);
     }
 

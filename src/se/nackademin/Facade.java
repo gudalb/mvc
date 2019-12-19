@@ -11,7 +11,6 @@ public class Facade {
         View view = new View(gameSize);
         Model model = new Model(gameSize);
         Controller controller = new Controller(model, view);
-
         Thread t1 = new Thread(controller);
         t1.start();
     }
