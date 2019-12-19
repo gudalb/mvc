@@ -16,9 +16,8 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
     public Controller (Model model, View view) {
         this.model = model;
         this.view = view;
-        this.view.setPlayingField(model.getPlayArea());
         this.view.addKeyListener(this);
-        this.model.addObserver(this);
+        this.model.addPropertyChangeListener(this);
     }
 
     @Override
@@ -34,13 +33,7 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
             if(moveDirection.equals("right"))
                 model.moveRight();
 
-            view.setPlayingField(model.getPlayArea());
-            view.setPlayerScore(model.getPlayerScore());
-
-            if(collision) {
-                view.showGameOver("Game Over, Score: " + model.getPlayerScore());
-                break;
-            }
+            if(collision) {break;}
 
             try {
                 Thread.sleep(150);
@@ -53,8 +46,9 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //System.out.println("property change detected");
-        this.collision = (boolean) evt.getNewValue();
+        if(evt.getPropertyName().equals("collision")) {
+            this.collision = (boolean) evt.getNewValue();
+        }
     }
 
     @Override

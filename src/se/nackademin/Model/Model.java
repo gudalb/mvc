@@ -2,11 +2,9 @@ package se.nackademin.Model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class Model  {
+public class Model {
     private int gameSize;
     private int playerLoc;
     private int playerScore = 0;
@@ -18,26 +16,21 @@ public class Model  {
     private boolean collision = false;
     private Random r = new Random();
     private int pointLoc;
-    private PropertyChangeSupport support;
+    private PropertyChangeSupport subjects;
     private String[] playArea;
 
     public Model(int gameSize) {
         this.gameSize = gameSize;
         playArea = new String[gameSize * gameSize];
-
-        for (int i = 0; i < playArea.length; i++) {
-            playArea[i] = filler;
-        }
-
+        Arrays.fill(playArea, filler);
         playerLoc = (gameSize * gameSize) / 2 + 5;
         playArea[playerLoc] = player;
         addRandomGoalPoint();
-        support = new PropertyChangeSupport(this);
-
+        subjects = new PropertyChangeSupport(this);
     }
 
-    public void addObserver (PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
+    public void addPropertyChangeListener (PropertyChangeListener pcl) {
+        subjects.addPropertyChangeListener(pcl);
     }
 
     public String getPlayArea() {
@@ -53,13 +46,6 @@ public class Model  {
         return playFieldString.toString();
     }
 
-    public boolean getCollision() {
-        return collision;
-    }
-
-    public int getPlayerScore () {
-        return playerScore;
-    }
 
     public void moveUp() {
 
@@ -130,15 +116,15 @@ public class Model  {
         if (playerLoc == pointLoc) {
             playerScore++;
             addRandomGoalPoint();
+            subjects.firePropertyChange("playerScore", null, playerScore);
         }
     }
 
     private void collisionCheck() {
-
-        if(playArea[playerLoc].equals(tail))
-            support.firePropertyChange("collision", this.collision, true);
-
-        collision = playArea[playerLoc].equals(tail);
+        if(playArea[playerLoc].equals(tail)) {
+            subjects.firePropertyChange("collision", this.collision, true);
+            collision = playArea[playerLoc].equals(tail);
+        }
     }
 
     private void paintGame() {
@@ -155,8 +141,9 @@ public class Model  {
             for (int e = 0; e < playerScore + 1; e++) {
                 playArea[playerMoveHistory.get(playerMoveHistory.size() - 1 - e)] = tail;
             }
-
         }
+
+        subjects.firePropertyChange("paintGame", null, getPlayArea());
 
     }
 }
