@@ -6,26 +6,19 @@ import se.nackademin.View.View;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class Controller extends JFrame implements Runnable, KeyListener {
+public class Controller implements Runnable, KeyListener, PropertyChangeListener {
     private Model model;
     private View view;
-    private JPanel invisPanel = new JPanel();
     private String moveDirection = "up";
 
     public Controller (Model model, View view) {
         this.model = model;
         this.view = view;
-        view.setPlayingField(model.getPlayArea());
-
-        // Jframe needed for KeyListener
-        add(invisPanel);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        addKeyListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
-
+        this.view.setPlayingField(model.getPlayArea());
+        this.view.addKeyListener(this);
     }
 
     @Override
@@ -43,7 +36,7 @@ public class Controller extends JFrame implements Runnable, KeyListener {
                 model.moveRight();
 
             view.setPlayingField(model.getPlayArea());
-            view.setPlayerScore(model.playerScore);
+            view.setPlayerScore(model.getPlayerScore());
 
             if(model.getCollision()) {
                 view.showGameOver("Game Over, Score: " + model.getPlayerScore());
@@ -57,6 +50,11 @@ public class Controller extends JFrame implements Runnable, KeyListener {
             }
 
         }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 
     @Override
@@ -89,5 +87,7 @@ public class Controller extends JFrame implements Runnable, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
     }
+
+
 }
 

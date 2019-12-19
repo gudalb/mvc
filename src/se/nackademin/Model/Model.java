@@ -1,18 +1,15 @@
 package se.nackademin.Model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Model {
+public class Model  {
     private int gameSize;
     private int playerLoc;
-
-    public int getPlayerScore() {
-        return playerScore;
-    }
-
-    public int playerScore = 0;
+    private int playerScore = 0;
     private List<Integer> playerMoveHistory = new ArrayList<>();
     private String player = "O";
     private String filler = "  ";
@@ -21,6 +18,7 @@ public class Model {
     private boolean collision = false;
     private Random r = new Random();
     private int pointLoc;
+    private PropertyChangeSupport support;
 
     private String[] playArea;
 
@@ -32,12 +30,15 @@ public class Model {
             playArea[i] = filler;
         }
 
-
         playerLoc = (gameSize * gameSize) / 2 + 5;
         playArea[playerLoc] = player;
         addRandomGoalPoint();
+        support = new PropertyChangeSupport(this);
 
+    }
 
+    public void addObserver (PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
     }
 
     public String getPlayArea() {
@@ -55,6 +56,10 @@ public class Model {
 
     public boolean getCollision() {
         return collision;
+    }
+
+    public int getPlayerScore () {
+        return playerScore;
     }
 
     public void moveUp() {
@@ -108,7 +113,6 @@ public class Model {
     private void makeMove() {
         collisionCheck();
         playArea[playerLoc] = player;
-
         checkIfPoint();
         paintGame();
 
@@ -116,11 +120,9 @@ public class Model {
 
     private void addRandomGoalPoint() {
 
-        while(true) {
+        do {
             pointLoc = r.nextInt(gameSize * gameSize);
-            if(!playArea[pointLoc].equals(tail) && !playArea[pointLoc].equals(player) )
-                break;
-        }
+        } while (playArea[pointLoc].equals(tail) || playArea[pointLoc].equals(player));
 
         playArea[pointLoc] = goal;
 

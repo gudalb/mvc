@@ -13,25 +13,22 @@ public class View extends JFrame {
     private JPanel gamePanel = new JPanel();
     private JLabel playerScore = new JLabel();
     private JPanel scorePanel = new JPanel();
-
     JTextArea playingField = new JTextArea(gameSize,gameSize);
 
     public View (int gameSize) {
         this.gameSize = gameSize;
-
         this.setSize(500,400);
         this.add(gamePanel);
-
         setVisible(true);
-
         playerScore.setText("Score: ");
         playingField.setEditable(false);
         gamePanel.add(playingField);
         scorePanel.add(playerScore);
         gamePanel.add(scorePanel);
-        this.setVisible(true);
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
 
     }
 
