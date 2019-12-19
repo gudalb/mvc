@@ -2,7 +2,6 @@ package se.nackademin.Controller;
 
 import se.nackademin.Model.Model;
 import se.nackademin.View.View;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
@@ -54,7 +53,7 @@ public class Controller implements Runnable, KeyListener, PropertyChangeListener
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("property change detected");
+        //System.out.println("property change detected");
         this.collision = (boolean) evt.getNewValue();
     }
 

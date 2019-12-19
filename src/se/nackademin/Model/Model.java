@@ -135,10 +135,8 @@ public class Model  {
 
     private void collisionCheck() {
 
-        if(playArea[playerLoc].equals(tail)) {
+        if(playArea[playerLoc].equals(tail))
             support.firePropertyChange("collision", this.collision, true);
-            System.out.println("prop fired");
-        }
 
         collision = playArea[playerLoc].equals(tail);
     }
